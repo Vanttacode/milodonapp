@@ -21,7 +21,6 @@ public class MotorManager {
     private static MotorManager instance;
 
     private ExecutorService commandExecutor;
-    private ScheduledExecutorService pollExecutor;
 
     private final Semaphore commandSemaphore = new Semaphore(1);
     private boolean isRunning = false;
@@ -49,7 +48,6 @@ public class MotorManager {
     public void init() {
         if (isRunning) return;
         commandExecutor = Executors.newSingleThreadExecutor();
-        pollExecutor = Executors.newSingleThreadScheduledExecutor();
         isRunning = true;
 
         commandExecutor.execute(this::initSerialPort);
@@ -74,38 +72,18 @@ public class MotorManager {
             serialInputStream = serialPort.getInputStream();
             Log.d(TAG, "Puerto serial abierto con éxito a 9600 bps.");
 
-            startPollThread();
-
         } catch (Throwable t) {
             // BLINDAJE DE ENTORNO: Evita el Force Close capturando LinkageErrors por falta del .so en desarrollo
             Log.e(TAG, "AVISO: Librería JNI ausente o error de permisos root protegido en taller.", t);
         }
     }
 
-    private void startPollThread() {
-        pollExecutor.scheduleAtFixedRate(() -> {
-            if (isDispensing) return;
-
-            long currentTime = System.currentTimeMillis();
-            if (currentTime - lastCommandTime >= 800) {
-                try {
-                    sendCommand("(POLL)");
-                } catch (IOException e) {
-                    Log.e(TAG, "Error al transmitir POLL de latido", e);
-                }
-            }
-        }, 0, 200, TimeUnit.MILLISECONDS);
-    }
-
     private void sendCommand(String command) throws IOException {
         try {
             commandSemaphore.acquire();
-            long timeSinceLast = System.currentTimeMillis() - lastCommandTime;
 
-            // Marcapasos anti-colisión obligatorio del hardware
-            if (timeSinceLast < DELAY_MS) {
-                Thread.sleep(DELAY_MS - timeSinceLast);
-            }
+            // Poka-Yoke Anti-Colisión: Es obligatorio un delay exacto de 111ms entre cada escritura
+            Thread.sleep(111);
 
             if (serialOutputStream != null) {
                 serialOutputStream.write(command.getBytes());
@@ -124,7 +102,7 @@ public class MotorManager {
 
     public void rotateMotor(final String sku, final MotorListener listener) {
         commandExecutor.execute(() -> {
-            isDispensing = true; // Pausar hilos secundarios de POLL
+            isDispensing = true;
             try {
                 String shipId = Long.toHexString(System.currentTimeMillis());
                 if (shipId.length() > 8) shipId = shipId.substring(shipId.length() - 8);
@@ -202,14 +180,13 @@ public class MotorManager {
                 }
             } finally {
                 lastCommandTime = System.currentTimeMillis();
-                isDispensing = false; // Restablecer latido de POLL
+                isDispensing = false;
             }
         });
     }
 
     public void release() {
         isRunning = false;
-        if (pollExecutor != null) pollExecutor.shutdownNow();
         if (commandExecutor != null) commandExecutor.shutdownNow();
 
         try {

@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
-        app:cardBackgroundColor="#1A1A1A">
+        app:cardBackgroundColor="#000000">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,9 +55,10 @@
                 android:layout_marginBottom="40dp" />
 
             <Button
+        android:padding="24dp"
                 android:id="@+id/btnCancelPayment"
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
                 android:text="CANCELAR OPERACIÓN"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"

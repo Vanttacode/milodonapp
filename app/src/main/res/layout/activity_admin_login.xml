@@ -26,19 +26,19 @@
         android:inputType="numberPassword"
         android:textSize="24sp"
         android:padding="16dp"
-        android:background="#1A1A1A"
+        android:background="#000000"
         android:gravity="center"
         android:layout_marginBottom="32dp"/>
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:text="AUTENTICAR"
         android:textColor="#FFFFFF"
         android:backgroundTint="#FF4500"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:padding="16dp" />
+        android:padding="24dp" />
 
 </LinearLayout>

@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class PaymentManager {
     private static final String TAG = "MDB_MANAGER";
@@ -19,11 +21,13 @@ public class PaymentManager {
     private UsbSerialPort usbSerialPort;
     private PaymentListener listener;
     private ExecutorService commandExecutor;
+    private ScheduledExecutorService pollExecutor;
     private Thread readThread;
 
     private enum State { IDLE, WAITING_VEND, DISPENSING, SESSION_COMPLETE }
     private State currentState = State.IDLE;
     private boolean isReading = false;
+    private long lastCommandTime = 0;
 
     private final StringBuilder readBuffer = new StringBuilder();
 
@@ -45,6 +49,7 @@ public class PaymentManager {
         if (usbSerialPort != null && usbSerialPort.isOpen()) return;
 
         commandExecutor = Executors.newSingleThreadExecutor();
+        pollExecutor = Executors.newSingleThreadScheduledExecutor();
         UsbManager manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
         List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
 
@@ -66,6 +71,7 @@ public class PaymentManager {
 
                 // Iniciar hilo de escucha asíncrona permanente (El adaptador reporta solo cuando hay actividad)
                 startReadThread();
+                startPollThread();
 
                 // Secuencia Mandatoria de Inicialización de lector Cashless MDB
                 commandExecutor.execute(() -> {
@@ -117,6 +123,12 @@ public class PaymentManager {
             }
         });
         readThread.start();
+    }
+
+    private void startPollThread() {
+        pollExecutor.scheduleAtFixedRate(() -> {
+            enviarComandoString("POLL");
+        }, 0, 800, TimeUnit.MILLISECONDS);
     }
 
     public void payment(final String amount, final String sku) {
@@ -188,6 +200,7 @@ public class PaymentManager {
             if (usbSerialPort != null && usbSerialPort.isOpen()) {
                 String formattedCmd = cmd + "\n";
                 usbSerialPort.write(formattedCmd.getBytes(), 100);
+                lastCommandTime = System.currentTimeMillis();
                 Log.d(TAG, "TX MDB-USB --> " + cmd);
             }
         } catch (IOException e) {
@@ -219,6 +232,7 @@ public class PaymentManager {
 
     public void release() {
         isReading = false;
+        if (pollExecutor != null) pollExecutor.shutdownNow();
         if (commandExecutor != null) commandExecutor.shutdownNow();
         try {
             if (usbSerialPort != null) {

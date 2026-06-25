@@ -22,6 +22,7 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -61,6 +62,18 @@ public class SupabaseClient {
             builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
             builder.hostnameVerifier((hostname, session) -> true);
 
+            builder.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request original = chain.request();
+                    Request request = original.newBuilder()
+                            .header("Accept-Profile", "milodon")
+                            .header("Content-Profile", "milodon")
+                            .build();
+                    return chain.proceed(request);
+                }
+            });
+
             return builder.build();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -98,7 +111,6 @@ public class SupabaseClient {
                 .addHeader("apikey", BuildConfig.SUPABASE_KEY)
                 .addHeader("Authorization", "Bearer " + BuildConfig.SUPABASE_KEY)
                 .addHeader("Accept", "application/json")
-                .addHeader("Accept-Profile", "milodon")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -165,7 +177,6 @@ public class SupabaseClient {
                 .addHeader("apikey", BuildConfig.SUPABASE_KEY)
                 .addHeader("Authorization", "Bearer " + BuildConfig.SUPABASE_KEY)
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Content-Profile", "milodon")
                 .post(body)
                 .build();
 
@@ -212,8 +223,6 @@ public class SupabaseClient {
                 .addHeader("Authorization", "Bearer " + BuildConfig.SUPABASE_KEY)
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Prefer", "return=representation")
-                .addHeader("Content-Profile", "milodon")
-                .addHeader("Accept-Profile", "milodon")
                 .post(body)
                 .build();
 
