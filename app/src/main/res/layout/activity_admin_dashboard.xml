@@ -17,9 +17,10 @@
         android:layout_marginBottom="64dp" />
 
     <Button
+        android:padding="24dp"
         android:id="@+id/btnMotorTester"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="wrap_content"
         android:text="PROBADOR DE MOTORES"
         android:textColor="#FFFFFF"
         android:backgroundTint="#333333"
@@ -28,9 +29,10 @@
         android:layout_marginBottom="24dp"/>
 
     <Button
+        android:padding="24dp"
         android:id="@+id/btnPosTester"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="wrap_content"
         android:text="PROBADOR POS / MDB"
         android:textColor="#FFFFFF"
         android:backgroundTint="#333333"
@@ -39,9 +41,10 @@
         android:layout_marginBottom="24dp"/>
 
     <Button
+        android:padding="24dp"
         android:id="@+id/btnExit"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="wrap_content"
         android:text="CERRAR PANEL"
         android:textColor="#FFFFFF"
         android:backgroundTint="#D32F2F"
