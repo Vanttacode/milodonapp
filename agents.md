@@ -89,3 +89,8 @@ chmod +x ./gradlew
 
 # 4. Validar que el empaquetador de recursos de Android (AAPT2) pase limpio sin errores de sintaxis XML
 ./gradlew lintDebug
+
+7. POLÍTICA DE COMPILACIÓN Y OFUSCACIÓN
+ProGuard / R8: Debe mantenerse configurado en minifyEnabled false en el archivo build.gradle. Al utilizar llamadas JNI nativas a través de archivos .so para abrir los periféricos serie de los motores, la ofuscación de ProGuard destruye las firmas de métodos que los drivers de C++ necesitan encontrar en el entorno runtime de Android.
+
+Estructuración del Empaquetado: Desactivar esquemas de división de APKs (splits) en Gradle para forzar la compilación de un archivo binario único y universal que facilite el despliegue directo en la placa.
