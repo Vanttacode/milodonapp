@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="#000000">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PANEL DE CONTROL TÉCNICO"
+        android:textColor="#FF4500"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="64dp" />
+
+    <Button
+        android:id="@+id/btnMotorTester"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:text="PROBADOR DE MOTORES"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#333333"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnPosTester"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:text="PROBADOR POS / MDB"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#333333"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnExit"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:text="CERRAR PANEL"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#D32F2F"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

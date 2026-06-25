@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="#000000">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ACCESO TÉCNICO"
+        android:textColor="#FF4500"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="48dp" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:hint="CONTRASEÑA DE ACCESO"
+        android:textColorHint="#505050"
+        android:textColor="#FFFFFF"
+        android:inputType="numberPassword"
+        android:textSize="24sp"
+        android:padding="16dp"
+        android:background="#1A1A1A"
+        android:gravity="center"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="AUTENTICAR"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#FF4500"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:padding="16dp" />
+
+</LinearLayout>

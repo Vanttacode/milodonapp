@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Milodon" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">#000000</item>
+        <item name="android:colorBackground">#000000</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#B0B0B0</item>
+        
+        <item name="colorAccent">#FF4500</item>
+        <item name="android:colorAccent">#FF4500</item>
+        <item name="colorPrimary">#000000</item>
+        <item name="colorPrimaryDark">#000000</item>
+        
+        <item name="android:buttonStyle">@style/MilodonButton</item>
+    </style>
+
+    <style name="MilodonButton" parent="Widget.AppCompat.Button">
+        <item name="android:backgroundTint">#FF4500</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

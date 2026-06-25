@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvTesterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PROBADOR MDB / POS"
+        android:textColor="#FF4500"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:letterSpacing="0.04"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <EditText
+                android:id="@+id/etPosAmount"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:hint="Monto (ej. 1500)"
+                android:textColorHint="#555555"
+                android:textColor="#FFFFFF"
+                android:inputType="numberDecimal"
+                android:textSize="22sp"
+                android:padding="16dp"
+                android:background="#1A1A1A"
+                android:layout_marginBottom="20dp"
+                android:gravity="center" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#1A1A1A">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <Button
+                        android:id="@+id/btnSetup"
+                        android:layout_width="match_parent"
+                        android:layout_height="68dp"
+                        android:text="INIT (SETUP)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.02"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/bg_button_premium"
+                        android:backgroundTint="#333333" />
+
+                    <Button
+                        android:id="@+id/btnStartSession"
+                        android:layout_width="match_parent"
+                        android:layout_height="68dp"
+                        android:text="START SESSION"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.02"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/bg_button_premium"
+                        android:backgroundTint="#333333" />
+
+                    <Button
+                        android:id="@+id/btnSimulatePayment"
+                        android:layout_width="match_parent"
+                        android:layout_height="68dp"
+                        android:text="SIMULAR PAGO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.02"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/bg_button_premium" />
+
+                    <Button
+                        android:id="@+id/btnSessionComplete"
+                        android:layout_width="match_parent"
+                        android:layout_height="68dp"
+                        android:text="SESSION COMPLETE"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.02"
+                        android:background="@drawable/bg_button_premium"
+                        android:backgroundTint="#333333" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:text="CANCELAR / ABORTAR"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_button_cancel" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

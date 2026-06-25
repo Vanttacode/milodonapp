@@ -1,0 +1,68 @@
+plugins {
+    id 'com.android.application'
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { instr ->
+        localProperties.load(instr)
+    }
+}
+
+android {
+    // CAMBIAR por el nombre de tu paquete real si no usas com.milodon.vmc
+    namespace 'com.milodon.vmc'
+    compileSdk 33
+
+    defaultConfig {
+        // CAMBIAR por el nombre de tu paquete real si no usas com.milodon.vmc
+        applicationId "com.milodon.vmc"
+        minSdk 22
+        targetSdk 22
+        versionCode 1
+        versionName "1.0"
+
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+
+        buildConfigField "String", "SUPABASE_URL", "\"${localProperties.getProperty('SUPABASE_URL', '')}\""
+        buildConfigField "String", "SUPABASE_KEY", "\"${localProperties.getProperty('SUPABASE_KEY', '')}\""
+        buildConfigField "String", "MACHINE_ID", "\"${localProperties.getProperty('MACHINE_ID', '')}\""
+    }
+
+    // UBICACIÓN CORRECTA: sourceSets directo en la raíz del bloque android
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+dependencies {
+    implementation 'com.squareup.okhttp3:okhttp:3.12.12'
+    implementation 'com.android.support:appcompat-v7:22.2.0'
+    implementation 'com.android.support:cardview-v7:22.2.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.mik3y:usb-serial-for-android:3.4.6'
+}
